@@ -10,11 +10,13 @@
 }
 </style>
 
+<% if user_signed_in? %>
 <br>
 <p class="bg-danger lead">
   <% sub_count = current_user.submissions.where(:due_date => Date.today .. Date.today + 7).count %>
   You have <%= sub_count %> submission<%= "s" if sub_count > 1 %> due within the next week. <%= link_to "View all submissions!", submissions_path %>
 </p>
+<% end %>
 
 <div class="jumbotron">
   <div class="container">
