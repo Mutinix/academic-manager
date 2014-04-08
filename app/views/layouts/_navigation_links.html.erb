@@ -9,6 +9,9 @@
 <% else %>
   <li><%= link_to 'Sign up', new_user_registration_path %></li>
 <% end %>
+
 <% if user_signed_in? %>
-  <li><%= link_to 'Users', users_path %></li>
+  <li>
+    <a href="<%= submissions_path %>">Submissions <span class="badge"><%= Submission.where('due_date >= :today', :today => Date.today).count.to_i %></span></a>
+  </li>
 <% end %>
