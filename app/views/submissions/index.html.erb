@@ -1,0 +1,42 @@
+<h2>Upcoming Submissions</h2>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Due Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @submissions.where('due_date >= :today', :today => Date.today).order("due_date ASC").each do |sub| %>
+      <tr class="
+      <%= 'danger' if sub.due_date <= Date.today + 3 %>
+      <%= 'warning' if sub.due_date <= Date.today + 5 %>
+      ">
+        <td><%= sub.title %></td>
+        <td><%= sub.due_date %> (<%= diff = (sub.due_date - Date.today).to_i %> day<%= "s" if diff > 1 %>)</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "Add New Submission", new_submission_path, :class => "btn btn-primary" %>
+
+<h2>Past Submissions</h2>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Due Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @submissions.where('due_date < :today', :today => Date.today).order("due_date DESC").each do |sub| %>
+      <tr class="success">
+        <td><%= sub.title %></td>
+        <td><%= sub.due_date %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
